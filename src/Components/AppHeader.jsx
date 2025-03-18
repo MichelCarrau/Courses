@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
+import logoImage from '../assets/NASA-Logo-1975.png'
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -31,26 +32,14 @@ function AppHeader() {
     <AppBar position="static" sx={{ borderRadius: '10px', margin: '7px', maxWidth: '99%', overflow: 'hidden' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+          
+          <img 
+            src={logoImage} 
+            alt="Logo" 
+            style={{ height: '50px', width: 'auto', marginRight: '10px' }}
+          />
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -120,7 +109,7 @@ function AppHeader() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
-              Imágenes NASA
+              Images NASA
             </Button>
 
             <Button
@@ -129,7 +118,7 @@ function AppHeader() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
-              Acerca de
+              About us
             </Button>
 
             <Button
@@ -138,7 +127,7 @@ function AppHeader() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
-              Contactanos
+              Contact me 👨‍🚀
             </Button>
           </Box>
         </Toolbar>
