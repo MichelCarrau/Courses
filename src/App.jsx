@@ -6,7 +6,7 @@ import AppRoutes from './mipagina/AppRoutes';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#fb3d21', // Cambia este color al que desees
+      default: '#0b3d92',
     },
   },
 });

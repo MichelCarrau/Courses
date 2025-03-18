@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
+import NeoWsAsteroids from './NeoWsAsteroids';
 
 const NasaImageOfTheDay = () => {
   const [imageData, setImageData] = useState(null);
@@ -9,9 +10,9 @@ const NasaImageOfTheDay = () => {
   useEffect(() => {
     const fetchNasaImage = async () => {
       try {
-        const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=H2NiNFcT1vKsPLC2a1HD2nyoBG3igTf10j0ex5Os'); // Cambia DEMO_KEY por tu propia clave
+        const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=H2NiNFcT1vKsPLC2a1HD2nyoBG3igTf10j0ex5Os');
         const data = await response.json();
-        setImageData(data); // Guarda los datos de la respuesta
+        setImageData(data); // Guarda
         setLoading(false);
       } catch (err) {
         setError('Error al obtener la imagen de la NASA');
@@ -38,7 +39,7 @@ const NasaImageOfTheDay = () => {
       marginTop: '20px',
       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', 
     }}>
-      {/* Título adicional para la imagen de la NASA */}
+      {/* Imagen de la NASA */}
       <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold', color: '#fff' }}>
       NASA IMAGE OF THE DAY
       </Typography>
@@ -62,15 +63,15 @@ const Home = () => {
     mt: 5,
     p: 4,
     borderRadius: '12px',
-    color: '#fff', // Texto blanco para contraste
-    backgroundColor: 'red',
+    color: '#fff',
+    backgroundColor: '#0b3d92',
   }}
 >
   <Typography
     variant="h3"
     sx={{
       fontWeight: 'bold',
-      textShadow: '3px 3px 10px rgba(255, 255, 255, 0.7)', // Un resplandor blanco como de estrella
+      textShadow: '3px 3px 10px rgba(255, 255, 255, 0.7)',
     }}
   >
     🌌Here you will find incredible images from NASA!🌌 ^-^
@@ -81,14 +82,20 @@ const Home = () => {
     sx={{
       mt: 2,
       fontStyle: 'italic',
-      textShadow: '2px 2px 8px rgba(255, 255, 255, 0.5)', // Un efecto más sutil para profundidad
+      textShadow: '2px 2px 8px rgba(255, 255, 255, 0.5)',
     }}
   >
     Explore the wonders of the universe through NASA's extensive media collection.
   </Typography>
 
-  {/* Aquí integras el componente de la imagen de la NASA */}
+
   <NasaImageOfTheDay />
+
+  <Typography variant="h3" sx={{ mt: 5, fontWeight: 'bold', color: '#fff' }}>
+        🚀 Asteroids Data from NASA 🚀
+      </Typography>
+
+      <NeoWsAsteroids /> 
 </Box>
 
   );

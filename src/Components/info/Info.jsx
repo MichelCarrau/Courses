@@ -1,75 +1,93 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getNasaImages } from '../nasaApi'; // Asegúrate de tener esta función
+import { getNasaImages } from '../nasaApi';
 import { Button, Modal, Box, TextField, Typography, InputLabel, FormControl } from '@mui/material';
-import CanvasDraw from 'react-canvas-draw'; // Para el área de dibujo
+import { ReactSketchCanvas } from 'react-sketch-canvas';
 
 const Info = () => {
   const location = useLocation();
-  const imageId = location.state?.imageId; // Obtenemos el ID de la imagen desde la ruta
-  
+  const imageId = location.state?.imageId;
+
   const [imageData, setImageData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [openModal, setOpenModal] = useState(false); // Control del modal
-  const [note, setNote] = useState(""); // Nota que el usuario escribe
-  const [drawing, setDrawing] = useState(null); // Objeto del dibujo
-  const [brushColor, setBrushColor] = useState("#000000"); // Color del pincel (por defecto negro)
-  const [isBold, setIsBold] = useState(false); // Formato de texto en negrita
-  const [selectedText, setSelectedText] = useState(""); // Texto seleccionado para aplicar formato
+  const [openModal, setOpenModal] = useState(false);
+  const [note, setNote] = useState("");
+  const [drawing, setDrawing] = useState(null);
+  const [brushColor, setBrushColor] = useState("#000000");
+  const [isBold, setIsBold] = useState(false);
+  const [selectedText, setSelectedText] = useState("");
 
+  // UseEffect p obtener los datos de la imagen
   useEffect(() => {
-    const fetchImageData = async () => {
-      try {
-        const fetchedImages = await getNasaImages();
-        const image = fetchedImages.find(item => item.data[0].nasa_id === imageId); // Buscamos la imagen por ID
-        setImageData(image);
-        setLoading(false);
-      } catch (err) {
-        setError("Error al obtener los detalles de la imagen: " + err.message);
-        setLoading(false);
-      }
-    };
+    if (imageId) {  // Solo si el ID está disponible
+      const fetchImageData = async () => {
+        try {
+          const fetchedImages = await getNasaImages();
+          const image = fetchedImages.find(item => item.data[0].nasa_id === imageId); // Buscar imagen por ID
+          if (image) {
+            setImageData(image);
+          } else {
+            setError("Imagen no encontrada");
+          }
+          setLoading(false);
+        } catch (err) {
+          setError("Error al obtener los detalles de la imagen: " + err.message);
+          setLoading(false);
+        }
+      };
 
-    fetchImageData();
-  }, [imageId]); // Re-fetch si el ID cambia
+      fetchImageData();
+    } else {
+      setLoading(false);
+      setError("ID de imagen no disponible");
+    }
+  }, [imageId]); // Solo se ejecuta cuando cambia el ID de la imagen y ya no coicide
 
   const handleOpenModal = () => {
     setOpenModal(true);
   };
 
   const handleCloseModal = () => {
+    setBrushColor("#000000");
+    setNote(""); // Limpiar
+    setDrawing(null); // Limpiar
     setOpenModal(false);
   };
 
-  // Función para guardar el dibujo y la anotación en archivos
+  // Guardar el dibujo y la nota en archivos
   const handleSaveDrawing = () => {
-    const imageUrl = drawing.getDataURL(); // Obtiene la URL de la imagen en base64
-    const imageBlob = dataURLtoBlob(imageUrl); // Convierte la imagen base64 a un blob
-    const imageFile = new Blob([imageBlob], { type: 'image/png' });
+    if (!note && !drawing) {
+      alert("Por favor, agrega una anotación o un dibujo antes de guardar.");
+      return;
+    }
 
-    // Crear archivo de texto con la anotación
+    const imageUrl = drawing ? drawing.getDataURL() : "";
+    const imageBlob = imageUrl ? dataURLtoBlob(imageUrl) : null; 
+    const imageFile = imageBlob ? new Blob([imageBlob], { type: 'image/png' }) : null;
+
+    // Creaarchivo
     const textFile = new Blob([note], { type: 'text/plain' });
 
-    // Crear enlaces de descarga
-    const imageDownloadUrl = URL.createObjectURL(imageFile);
+    // Creardescarga
+    if (imageFile) {
+      const imageDownloadUrl = URL.createObjectURL(imageFile);
+      const imageLink = document.createElement('a');
+      imageLink.href = imageDownloadUrl;
+      imageLink.download = 'dibujo.png';
+      imageLink.click();
+    }
+
     const textDownloadUrl = URL.createObjectURL(textFile);
-
-    // Crear enlaces y simular el clic para descargar
-    const imageLink = document.createElement('a');
-    imageLink.href = imageDownloadUrl;
-    imageLink.download = 'dibujo.png'; // Nombre del archivo de la imagen
-    imageLink.click();
-
     const textLink = document.createElement('a');
     textLink.href = textDownloadUrl;
-    textLink.download = 'anotacion.txt'; // Nombre del archivo de la anotación
+    textLink.download = 'anotacion.txt';
     textLink.click();
 
-    setOpenModal(false); // Cerrar el modal después de guardar
+    setOpenModal(false);
   };
 
-  // Función para convertir base64 a Blob (para la imagen)
+
   const dataURLtoBlob = (dataURL) => {
     const [base64Header, base64Data] = dataURL.split(',');
     const byteString = atob(base64Data);
@@ -83,24 +101,23 @@ const Info = () => {
     return new Blob([uint8Array], { type: 'image/png' });
   };
 
-  // Cambiar el color del pincel
+  // Color pincel
   const handleBrushColorChange = (event) => {
     setBrushColor(event.target.value);
   };
 
-  // Cambiar el estilo del texto (negritas)
   const handleBoldText = () => {
     if (selectedText) {
-      setNote(note.replace(selectedText, `<b>${selectedText}</b>`)); // Aplicar negritas al texto seleccionado
-      setSelectedText(""); // Resetear el texto seleccionado
+      setNote(note.replace(selectedText, `<b>${selectedText}</b>`));
+      setSelectedText("");
     } else {
       setIsBold(!isBold);
     }
   };
 
   const handleTextSelect = (event) => {
-    const text = window.getSelection().toString(); // Obtener el texto seleccionado
-    setSelectedText(text); // Guardar el texto seleccionado
+    const text = window.getSelection().toString();
+    setSelectedText(text); // Guardar txt
   };
 
   if (loading) {
@@ -117,7 +134,7 @@ const Info = () => {
         <div>
           <h1>{imageData.data[0].title}</h1>
           
-          {/* Imagen clicable que te lleva a la URL */}
+          {/* Imagen + nueva ventana */}
           <a href={imageData.links && imageData.links.length > 0 ? imageData.links[0].href : '#'} target="_blank" rel="noopener noreferrer">
             <img
               src={imageData.links && imageData.links.length > 0 ? imageData.links[0].href : ''}
@@ -128,29 +145,35 @@ const Info = () => {
           
           <p>{imageData.data[0].description}</p>
 
-          {/* Botón para abrir el modal */}
+          {/* Botón dibujar y anotar */}
           <Button variant="contained" color="primary" onClick={handleOpenModal}>
             Dibujar y Anotar
           </Button>
 
-          {/* Modal para el área de dibujo y anotación */}
-          <Modal open={openModal} onClose={handleCloseModal}>
+          {/* área de dibuj */}
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+          >
             <Box sx={{
               position: 'absolute',
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 600,
+              width: 400,
               bgcolor: 'background.paper',
               border: '2px solid #000',
               boxShadow: 24,
               p: 4,
+              borderRadius: '8px',
             }}>
-              <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+              <Typography id="modal-title" variant="h6" sx={{ marginBottom: '10px' }}>
                 Agregar Anotación y Dibujo
               </Typography>
               
-              {/* Selector de color para el pincel */}
+              {/* Color pincel */}
               <FormControl fullWidth sx={{ marginBottom: '20px' }}>
                 <InputLabel>Color del pincel</InputLabel>
                 <input
@@ -160,40 +183,42 @@ const Info = () => {
                   style={{ width: '100%' }}
                 />
               </FormControl>
-              
-              {/* Área de dibujo */}
-              <CanvasDraw 
-                ref={(canvasDraw) => setDrawing(canvasDraw)} 
-                brushColor={brushColor}
-                brushRadius={2}
-                lazyRadius={0}
-                style={{ border: '1px solid black', marginBottom: '20px', width: '100%' }}
+
+              {/* C */}
+              <ReactSketchCanvas
+                width="100%"
+                height={200}
+                strokeColor={brushColor}
+                strokeWidth={5}
+                onChange={setDrawing}
+                style={{ border: '1px solid #ddd' }}
               />
-              {/* Campo de anotación con posibilidad de seleccionar texto */}
+
+              {/* anotac */}
               <TextField
-                label="Añadir anotación"
+                label="Anotación"
                 multiline
                 fullWidth
-                rows={4}
                 variant="outlined"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                onMouseUp={handleTextSelect} // Detectar cuando el usuario selecciona texto
-                sx={{ marginBottom: '20px' }}
+                onSelect={handleTextSelect}
+                sx={{ marginTop: '10px' }}
               />
-              <div>
-                {/* Botón para hacer el texto en negritas */}
-                <Button variant="outlined" onClick={handleBoldText} sx={{ marginRight: '10px' }}>
-                  {selectedText ? "Aplicar Negritas" : (isBold ? "Quitar Negritas" : "Negritas")}
-                </Button>
-                {/* Botón para guardar */}
-                <Button variant="contained" color="secondary" onClick={handleSaveDrawing} sx={{ marginRight: '10px' }}>
-                  Guardar
-                </Button>
-                <Button variant="outlined" color="secondary" onClick={handleCloseModal}>
-                  Cerrar
-                </Button>
-              </div>
+
+              {/* botones a editar negritas */}
+              <Button onClick={handleBoldText} variant="contained" sx={{ marginTop: '10px' }}>
+                {isBold ? "Desactivar Negritas" : "Aplicar Negritas"}
+              </Button>
+
+              <Button
+                onClick={handleSaveDrawing}
+                variant="contained"
+                color="primary"
+                sx={{ marginTop: '20px' }}
+              >
+                Guardar
+              </Button>
             </Box>
           </Modal>
         </div>

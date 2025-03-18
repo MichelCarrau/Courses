@@ -4,7 +4,7 @@ import { Box, Typography, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 const NasaImageDetails = () => {
-  const { nasaId } = useParams(); // Obtenemos el ID de la imagen desde los parámetros de la URL
+  const { nasaId } = useParams(); // Obtenemos ID de la imagen
   const [imageData, setImageData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const NasaImageDetails = () => {
         const data = response.data.collection.items;
         
         if (data && data.length > 0) {
-          setImageData(data[0]); // Suponiendo que 'data[0]' es el objeto con la imagen
+          setImageData(data[0]); // 'data[0]' es objeto c la imagen
         } else {
           setError('No se encontraron detalles de la imagen.');
         }
@@ -28,7 +28,7 @@ const NasaImageDetails = () => {
     };
 
     fetchImageDetails();
-  }, [nasaId]); // Se vuelve a ejecutar cuando cambia el 'nasaId'
+  }, [nasaId]); // Ejecutar c cambia el 'nasaId'
 
   if (loading) {
     return (

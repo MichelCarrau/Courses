@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { getNasaImages } from './nasaApi'; // Importa la función desde nasaApi.js
-import { Card, CardContent, CardMedia, Typography, Grid, Select, MenuItem, FormControl, InputLabel, Button } from '@mui/material'; // Material-UI Components
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate para redirigir a /info
+import { getNasaImages } from './nasaApi';
+import { Card, CardContent, CardMedia, Typography, Grid, Select, MenuItem, FormControl, InputLabel, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; 
 
 const NasaImageSearch = () => {
-  const [images, setImages] = useState([]); // Estado para las imágenes
-  const [loading, setLoading] = useState(true); // Estado para el cargando
-  const [error, setError] = useState(null); // Estado para el error
-  const [selectedCategory, setSelectedCategory] = useState(''); // Estado para la categoría seleccionada
-  const navigate = useNavigate(); // Hook de React Router para navegar a otras páginas
+  const [images, setImages] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const navigate = useNavigate(); // Router p/ navegar a otras páginas
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const fetchedImages = await getNasaImages();  // Aquí no necesitas pasar la clave API
-        setImages(fetchedImages); // Guarda las imágenes en el estado
-        setLoading(false); // Finaliza el estado de carga
+        const fetchedImages = await getNasaImages(); 
+        setImages(fetchedImages); // Guarda img
+        setLoading(false); // Finaliza
       } catch (err) {
-        setError("Error al obtener las imágenes: " + err.message); // Maneja el error
+        setError("Error al obtener las imágenes: " + err.message);
         setLoading(false);
       }
     };
 
-    fetchImages(); // Ejecutamos la función cuando el componente se monte
-  }, []); // Este effect solo se ejecuta una vez cuando el componente se monta
+    fetchImages(); 
+  }, []); //Solo 1 vez
 
-  // Filtrar las imágenes según el título o alguna palabra clave
+  // Categorias
   const filteredImages = selectedCategory
     ? images.filter((item) => item.data[0].title.toLowerCase().includes(selectedCategory.toLowerCase()))
     : images;
@@ -61,7 +61,7 @@ const NasaImageSearch = () => {
         {filteredImages.length > 0 ? (
           filteredImages.map((item, index) => (
             <Grid item xs={12} sm={6} md={4} key={index} style={{ display: 'flex', justifyContent: 'center' }}>
-              <Card sx={{ maxWidth: 400, width: '100%', boxShadow: 3, backgroundColor: '#fc3d21' }}>
+              <Card sx={{ maxWidth: 400, width: '100%', boxShadow: 3, backgroundColor: '#b52915' , color: 'white'}}>
                 <CardMedia
                   component="img"
                   height="300"
@@ -70,11 +70,12 @@ const NasaImageSearch = () => {
                   sx={{ objectFit: 'cover' }}
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h6" component="div" align="center">
+                  <Typography gutterBottom variant="h5" component="div" align="center">
                     {item.data[0].title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" align="center">
-                    {item.data[0].description.substring(0, 100)}... {/* Resumen de la descripción */}
+                  <br></br>
+                  <Typography variant="body2" color="white" align="center">
+                    {item.data[0].description.substring(0, 100)}... {/* Resumen descr */}
                   </Typography>
                   <Button
                     fullWidth

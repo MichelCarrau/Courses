@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
-import logoImage from '../assets/NASA-Logo-1975.png'
+import logoImage from '../assets/nasa-1-logo-png-transparent.png'
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -29,14 +29,14 @@ function AppHeader() {
   };
 
   return (
-    <AppBar position="static" sx={{ borderRadius: '10px', margin: '7px', maxWidth: '99%', overflow: 'hidden' }}>
+    <AppBar position="static" sx={{ borderRadius: '10px', margin: '7px', maxWidth: '99%', overflow: 'hidden', backgroundColor:'#b52915' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           
           <img 
             src={logoImage} 
             alt="Logo" 
-            style={{ height: '50px', width: 'auto', marginRight: '10px' }}
+            style={{ height: '70px', width: 'auto', marginRight: '20px' }}
           />
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>

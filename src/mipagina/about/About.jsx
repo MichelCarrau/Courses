@@ -6,13 +6,14 @@ function About() {
       display: 'flex', 
       justifyContent: 'center', 
       alignItems: 'center', 
-      height: '80vh', 
+      height: '100vh', 
       textAlign: 'center',
       padding: '20px',
       boxSizing: 'border-box',
       flexDirection: 'column',
       backgroundImage: 'url(https://www.wbs.ac.uk/sites/wbs2020/cache/file/6E097BF2-DC2A-C606-597DAB7236AD4F70.jpg)', 
-      color: 'white'
+      color: 'white',
+      height: '650px'
     }}>
       <h1>About this page 🚀</h1>
       <p style={{ fontSize: '18px', lineHeight: '1.6' }}>

@@ -12,7 +12,8 @@ function Contact() {
       boxSizing: 'border-box',
       flexDirection: 'column',
       backgroundImage: 'url(https://www.wbs.ac.uk/sites/wbs2020/cache/file/6E097BF2-DC2A-C606-597DAB7236AD4F70.jpg)', 
-      color: 'white'
+      color: 'white',
+      height: '650px'
     }}>
       <h1>Let's talk! 📩</h1>
       <p style={{ fontSize: '18px', lineHeight: '1.6' }}>
