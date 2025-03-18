@@ -14,13 +14,13 @@ function Contact() {
       backgroundImage: 'url(https://www.wbs.ac.uk/sites/wbs2020/cache/file/6E097BF2-DC2A-C606-597DAB7236AD4F70.jpg)', 
       color: 'white'
     }}>
-      <h1>¡Hablemos! 📩</h1>
+      <h1>Let's talk! 📩</h1>
       <p style={{ fontSize: '18px', lineHeight: '1.6' }}>
-        ¿Tienes alguna sugerencia para mejorar esta página o quieres contribuir con contenido?
-        ¡Tu ayuda es bienvenida! 🌟
+        Do you have any suggestions to improve this page or want to contribute content?
+        Your help is welcome! 🌟
       </p>
       <p style={{ fontSize: '18px', lineHeight: '1.6', fontWeight: 'bold' }}>
-        Contáctame en <span style={{ color: 'lightblue' }}>Instagram</span> y trabajemos juntos. ✨
+        Contact me on <span style={{ color: 'lightblue' }}>Instagram</span> and let's work together. ✨
       </p>
       <p style={{ fontSize: '20px', fontWeight: 'bold' }}>
         📸 <a href="https://www.instagram.com/lovelmich" target="_blank" rel="noopener noreferrer" 
@@ -29,7 +29,7 @@ function Contact() {
         </a>  
       </p>
       <p style={{ fontSize: '18px', lineHeight: '1.6' }}>
-       ¡Espero leerte pronto! 💌  
+       I hope to hear from you soon! 💌  
       </p>
       <div style={{ 
         width: '100%', 
@@ -50,7 +50,7 @@ function Contact() {
           fontSize: '20px',
           fontWeight: 'bold'
         }}>
-          "Cada idea cuenta, cada sugerencia suma. 💡🚀"
+          "Every idea matters, every suggestion adds. 💡🚀"
         </p>
       </div>
     </div>

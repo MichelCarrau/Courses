@@ -14,13 +14,13 @@ function About() {
       backgroundImage: 'url(https://www.wbs.ac.uk/sites/wbs2020/cache/file/6E097BF2-DC2A-C606-597DAB7236AD4F70.jpg)', 
       color: 'white'
     }}>
-      <h1>Sobre esta página 🚀</h1>
+      <h1>About this page 🚀</h1>
       <p style={{ fontSize: '18px', lineHeight: '1.6' }}>
-        Bienvenid@ al espacio visual de la NASA. Soy <span style={{ color: 'lightblue' }}>Mich</span>, y creé este rincón 
-        para compartir imágenes impresionantes del cosmos. 🌌✨
+        Welcome to NASA's visual space. I'm <span style={{ color: 'lightblue' }}>Mich</span>, and I created this corner 
+        to share stunning images of the cosmos. 🌌✨
       </p>
       <p style={{ fontSize: '18px', lineHeight: '1.6', fontWeight: 'bold' }}>
-        Recuerda: el universo está lleno de maravillas, solo hay que saber dónde mirar. 🔭🌠
+        Remember: the universe is full of wonders, you just have to know where to look. 🔭🌠
       </p>
       <p style={{ fontSize: '18px', lineHeight: '1.6' }}>
 
@@ -44,10 +44,10 @@ function About() {
           fontSize: '20px',
           fontWeight: 'bold'
         }}>
-          "El universo es infinito, y nuestras ganas de explorarlo también." 🚀✨
+          "The universe is infinite, and our desire to explore it is too." 🚀✨
         </p>
       </div>
-      <p style={{ fontSize: '30px', fontWeight: 'bold', color: 'lightblue' }}>¡Disfruta el viaje! 🌌</p>
+      <p style={{ fontSize: '30px', fontWeight: 'bold', color: 'lightblue' }}>Enjoy the journey! 🌌</p>
     </div>
   );
 }
