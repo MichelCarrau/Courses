@@ -8,7 +8,7 @@ import NotFound from './Notfound';
 import PageDash from './dash/PageDash';
 import PageTrading from './dash/PageTrading';
 import DetallesDash from './dash/DetallesDash';
-
+import Info from '../Components/info/Info.jsx';
 
 export default function AppRoutes() {
   return (
@@ -22,6 +22,7 @@ export default function AppRoutes() {
       <Route path="/dash/:id" element={<DetallesDash />} />
       <Route path="/dash/trading" element={<PageTrading />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/Info" element={<Info />} />
     </Routes>
   );
 }

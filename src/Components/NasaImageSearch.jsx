@@ -81,7 +81,7 @@ const NasaImageSearch = () => {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    onClick={() => navigate(`/info`, { state: { imageId: item.data[0].nasa_id } })}
+                    onClick={() => navigate(`/Info`, { state: { imageId: item.data[0].nasa_id } })}
                   >
                     Ver más
                   </Button>
