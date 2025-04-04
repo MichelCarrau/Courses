@@ -8,7 +8,7 @@ import NotFound from './Notfound';
 import PageDash from './dash/PageDash';
 import PageTrading from './dash/PageTrading';
 import DetallesDash from './dash/DetallesDash';
-import Info from '../Components/info/Info.jsx';
+import Info from '../Components/info/TempInfo';
 
 export default function AppRoutes() {
   return (
